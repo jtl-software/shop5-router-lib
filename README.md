@@ -11,7 +11,7 @@
 
 ## Usage
 
-> My Crud Service 'product.service.js'
+> api.php
 ```php
 use JTL\Plugin\Helper as PluginHelper;
 
