@@ -9,8 +9,9 @@ use JTL\Plugin\Plugin;
 use JTL\Plugin\PluginInterface;
 use JTL\Shop;
 use InvalidArgumentException;
+use JTL\Shop5Router\Traits\Pluginable;
+use JTL\Shop5Router\Traits\Shopable;
 use Monolog\Logger;
-use JTL\Shop5Router\Traits\Voucherable;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -19,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 abstract class AbstractController implements ControllerInterface
 {
-    use Voucherable;
+    use Shopable, Pluginable;
     
     /**
      * @param Shop $shop
