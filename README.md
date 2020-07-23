@@ -6,7 +6,7 @@
 
 > Using composer:
  ```shell
- $ composer require jtl/shop5-router
+ $ composer require jtl/shop5-router-lib
  ```
 
 ## Usage
@@ -31,6 +31,36 @@ try {
 } catch (Exception $e) {
     header('Internal Server Error', true, 500);
     echo $e->getMessage();
+}
+```
+
+> FooController.php
+```php
+<?php declare(strict_types=1);
+
+namespace Plugin\your_plugin\Controller;
+
+use Plugin\your_plugin\Models\Foobar;
+use Plugin\your_plugin\Services\FooService;
+use JTL\Shop5Router\Http\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+
+class FooController extends AbstractController
+{
+    /**
+     * Can be accessed via Http GET api.php?action=foo.bar&id=3
+     * Other Http Methods are also available
+     * 
+     * @param Request $request
+     * @param string $id
+     * @return Foobar|null
+    */
+    public function bar(Request $request, string $id): ?Foobar
+    {
+        $service = new FooService();
+    
+        return $service->find($id);
+    }
 }
 ```
 
