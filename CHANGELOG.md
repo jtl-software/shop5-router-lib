@@ -3,6 +3,11 @@ CHANGELOG
 
 This changelog references the relevant changes (bug and security fixes)
 
+* 0.2.0 (2020-08-04)
+    
+    * change [Route] Route Controller must be an instance of AbstractController
+    * feature [Router] Added before and after callback on Router lifecircle
+
 * 0.1.0 (2020-07-29)
     
     * feature [Lib] Switch to new izzle model version

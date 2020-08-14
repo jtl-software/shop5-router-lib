@@ -3,6 +3,8 @@
 namespace JTL\Shop5Router\Http;
 
 use JTL\Plugin\PluginInterface;
+use JTL\Shop5Router\Exceptions\InvalidControllerException;
+use JTL\Shop5Router\Http\Controller\AbstractController;
 use function explode;
 use InvalidArgumentException;
 use Izzle\Support\Str;
@@ -48,7 +50,7 @@ class Route
     protected array $arguments = [];
     
     /**
-     * @var array
+     * @var AbstractController[]
      */
     protected array $controllers = [];
     
@@ -91,6 +93,7 @@ class Route
     
     /**
      * @param Request $request
+     * @throws InvalidControllerException
      * @return mixed
      */
     public function call(Request $request)
@@ -101,6 +104,16 @@ class Route
                 $this->getControllerPath(),
                 ucfirst(Str::camel($this->getController()))
             );
+            
+            $controller = new $fqn($this->getShop(), $this->getPlugin());
+            
+            if (!($controller instanceof AbstractController)) {
+                throw new InvalidControllerException(sprintf(
+                    'Controller must be an instance of \'%s\'. \'%s\' given.',
+                    AbstractController::class,
+                    get_class($controller)
+                ));
+            }
             
             $this->controllers[$this->getController()] = new $fqn($this->getShop(), $this->getPlugin());
         }
