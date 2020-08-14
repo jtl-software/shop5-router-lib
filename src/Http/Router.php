@@ -2,10 +2,10 @@
 
 namespace JTL\Shop5Router\Http;
 
-use Exception;
 use JTL\Plugin\PluginInterface;
 use JTL\Shop5Router\Http\Error\ErrorTranslator;
 use JTL\Shop5Router\Traits\ErrorTranslatable;
+use Throwable;
 use function json_decode;
 use function json_encode;
 use JTL\Shop5Router\Traits\Shopable;
@@ -31,6 +31,16 @@ class Router
      * @var Route
      */
     protected Route $route;
+    
+    /**
+     * @var array
+     */
+    protected array $beforeCallbacks = [];
+    
+    /**
+     * @var array
+     */
+    protected array $afterCallbacks = [];
     
     /**
      * @param string $controllerPath
@@ -77,8 +87,12 @@ class Router
         ];
         
         try {
-            $response['data'] = $this->route->call($request);
-        } catch (Exception $e) {
+            $this->callBeforeCallbacks($request, $arguments);
+        } catch (Throwable $e) { }
+        
+        try {
+            $response['data'] = $this->callAfterCallbacks($request, $arguments, $this->route->call($request));
+        } catch (Throwable $e) {
             $response['data'] = null;
             $response['code'] = $e->getCode();
             $response['error'] = ($this->errorTranslator() !== null && $this->errorTranslator()->has($e->getCode()))
@@ -90,6 +104,28 @@ class Router
         header('Content-Type: application/json');
         
         return $json;
+    }
+    
+    /**
+     * @param callable $callable
+     * @return $this
+     */
+    public function before(callable $callable): self
+    {
+        $this->beforeCallbacks[] = $callable;
+
+        return $this;
+    }
+    
+    /**
+     * @param callable $callable
+     * @return $this
+     */
+    public function after(callable $callable): self
+    {
+        $this->afterCallbacks[] = $callable;
+    
+        return $this;
     }
     
     /**
@@ -118,5 +154,33 @@ class Router
         $this->controllerPath = $controllerPath;
         
         return $this;
+    }
+    
+    /**
+     * @param Request $request
+     * @param array $arguments
+     */
+    protected function callBeforeCallbacks(Request $request, array &$arguments): void
+    {
+        foreach ($this->beforeCallbacks as $before) {
+            $before($request, $arguments);
+        }
+    }
+    
+    /**
+     * @param Request $request
+     * @param array $arguments
+     * @param mixed $result
+     * @return mixed
+     */
+    protected function callAfterCallbacks(Request $request, array $arguments, $result)
+    {
+        foreach ($this->afterCallbacks as $after) {
+            $afterResult = $after($request, $arguments, $result);
+            
+            $result = $result ?? $afterResult;
+        }
+        
+        return $result;
     }
 }

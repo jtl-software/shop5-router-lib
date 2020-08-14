@@ -14,6 +14,7 @@
 > api.php
 ```php
 use JTL\Plugin\Helper as PluginHelper;
+use Symfony\Component\HttpFoundation\Request;
 
 $plugin = null;
 $pluginId = PluginHelper::getIDByPluginID('your_plugin');
@@ -25,6 +26,11 @@ if ($pluginId !== null) {
 }
 
 $router = new Router('Plugin\your_plugin\Controller', Shop()::getInstance(), $plugin);
+
+// After events (before works also)
+$router->after(static function (Request $request, array $arguments, $result) {
+    // Nasty after logic
+});
 
 try {
     echo $router->send();
