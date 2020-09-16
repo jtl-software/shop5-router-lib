@@ -25,15 +25,20 @@ abstract class AbstractController implements ControllerInterface
     /**
      * @param Shop $shop
      * @param PluginInterface $plugin
+     * @param string|null $langPath
      */
-    public function __construct(Shop $shop, PluginInterface $plugin)
+    public function __construct(Shop $shop, PluginInterface $plugin, ?string $langPath = null)
     {
         $this->setShop($shop);
         $this->setPlugin($plugin);
     
+        if ($langPath === null) {
+            return;
+        }
+    
         try {
             Translation::load(
-                sprintf('%s/../../../resources/lang/%s.json', __DIR__, $this->shop->_Language()->getIso()),
+                sprintf('%s/%s.json', $langPath, $this->shop->_Language()->getIso()),
                 new ParameterEnclosure(),
                 $this->shop->_Language()->getIso()
             );
