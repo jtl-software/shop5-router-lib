@@ -3,6 +3,10 @@ CHANGELOG
 
 This changelog references the relevant changes (bug and security fixes)
 
+* 0.3.2 (2020-11-16)
+
+    * feature [Controller] Added optional Translator to controller
+
 * 0.3.1 (2020-11-16)
     
     * change [Lib] Push to new major model lib

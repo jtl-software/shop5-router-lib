@@ -2,8 +2,6 @@
 
 namespace JTL\Shop5Router\Http\Controller;
 
-use Exception;
-use Izzle\Translation\ParameterEnclosure;
 use Izzle\Translation\Services\Translation;
 use JTL\Plugin\Plugin;
 use JTL\Plugin\PluginInterface;
@@ -12,7 +10,6 @@ use InvalidArgumentException;
 use JTL\Shop5Router\Traits\Pluginable;
 use JTL\Shop5Router\Traits\Shopable;
 use JTL\Shop5Router\Traits\Translatable;
-use Monolog\Logger;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -26,25 +23,15 @@ abstract class AbstractController implements ControllerInterface
     /**
      * @param Shop $shop
      * @param PluginInterface $plugin
-     * @param string|null $langPath
+     * @param Translation|null $translator
      */
-    public function __construct(Shop $shop, PluginInterface $plugin, ?string $langPath = null)
+    public function __construct(Shop $shop, PluginInterface $plugin, ?Translation $translator = null)
     {
         $this->setShop($shop);
         $this->setPlugin($plugin);
-    
-        if ($langPath === null) {
-            return;
-        }
-    
-        try {
-            $this->setTranslation(new Translation(
-                sprintf('%s/%s.json', $langPath, $this->shop->_Language()->getIso()),
-                new ParameterEnclosure(),
-                $this->shop->_Language()->getIso()
-            ));
-        } catch (Exception $e) {
-            $this->log($e->getMessage(), Logger::ERROR);
+        
+        if ($translator !== null) {
+            $this->setTranslator($translator);
         }
     }
     
