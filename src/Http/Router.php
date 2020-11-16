@@ -2,9 +2,11 @@
 
 namespace JTL\Shop5Router\Http;
 
+use Izzle\Translation\Services\Translation;
 use JTL\Plugin\PluginInterface;
 use JTL\Shop5Router\Http\Error\ErrorTranslator;
 use JTL\Shop5Router\Traits\ErrorTranslatable;
+use JTL\Shop5Router\Traits\Translatable;
 use Throwable;
 use function json_decode;
 use function json_encode;
@@ -20,7 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class Router
 {
-    use Shopable, Pluginable, ErrorTranslatable;
+    use Shopable, Pluginable, ErrorTranslatable, Translatable;
     
     /**
      * @var string
@@ -47,18 +49,24 @@ class Router
      * @param Shop $shop
      * @param PluginInterface $plugin
      * @param ErrorTranslator|null $errorTranslator
+     * @param Translation|null $translator
      */
     public function __construct(
         string $controllerPath,
         Shop $shop,
         PluginInterface $plugin,
-        ?ErrorTranslator $errorTranslator = null) {
+        ?ErrorTranslator $errorTranslator = null,
+        ?Translation $translator = null) {
         $this->setControllerPath($controllerPath);
         $this->setShop($shop);
         $this->setPlugin($plugin);
         
         if ($errorTranslator !== null) {
             $this->setErrorTranslator($errorTranslator);
+        }
+        
+        if ($translator !== null) {
+            $this->setTranslator($translator);
         }
     }
     
@@ -77,6 +85,7 @@ class Router
             $arguments['action'] ?? '',
             $this->getShop(),
             $this->getPlugin(),
+            $this->getTranslator(),
             $arguments
         );
         

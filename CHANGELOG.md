@@ -3,6 +3,12 @@ CHANGELOG
 
 This changelog references the relevant changes (bug and security fixes)
 
+* 0.3.0 (2020-11-16)
+
+    * change [Lib] Push to new translation major version
+    * feature [Route] Added optional Tranlator to Route
+    * feature [Router] Added optional Tranlator to Router
+
 * 0.2.0 (2020-08-04)
     
     * change [Route] Route Controller must be an instance of AbstractController
