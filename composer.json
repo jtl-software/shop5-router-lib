@@ -12,7 +12,7 @@
         "ext-json": "*",
         "symfony/http-foundation": "^4.3.2",
         "izzle/model": "^0.9.0",
-        "izzle/translation": "^0.1.0",
+        "izzle/translation": "^0.2.0",
         "monolog/monolog": "^1.23"
     },
     "require-dev": {

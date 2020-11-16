@@ -2,9 +2,11 @@
 
 namespace JTL\Shop5Router\Http;
 
+use Izzle\Translation\Services\Translation;
 use JTL\Plugin\PluginInterface;
 use JTL\Shop5Router\Exceptions\InvalidControllerException;
 use JTL\Shop5Router\Http\Controller\AbstractController;
+use JTL\Shop5Router\Traits\Translatable;
 use function explode;
 use InvalidArgumentException;
 use Izzle\Support\Str;
@@ -22,7 +24,7 @@ use function ucfirst;
  */
 class Route
 {
-    use Shopable, Pluginable;
+    use Shopable, Pluginable, Translatable;
     
     /**
      * @var string
@@ -59,6 +61,7 @@ class Route
      * @param string $action
      * @param Shop $shop
      * @param PluginInterface $plugin
+     * @param Translation|null $translator
      * @param array $arguments
      */
     public function __construct(
@@ -66,6 +69,7 @@ class Route
         string $action,
         Shop $shop,
         PluginInterface $plugin,
+        ?Translation $translator = null,
         array $arguments = []
     ) {
         if (strpos($action, '.') === false) {
@@ -89,6 +93,10 @@ class Route
         $this->setArguments($arguments);
         $this->setShop($shop);
         $this->setPlugin($plugin);
+        
+        if ($translator !== null) {
+            $this->setTranslator($translator);
+        }
     }
     
     /**

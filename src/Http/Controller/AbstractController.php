@@ -11,6 +11,7 @@ use JTL\Shop;
 use InvalidArgumentException;
 use JTL\Shop5Router\Traits\Pluginable;
 use JTL\Shop5Router\Traits\Shopable;
+use JTL\Shop5Router\Traits\Translatable;
 use Monolog\Logger;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -20,7 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 abstract class AbstractController implements ControllerInterface
 {
-    use Shopable, Pluginable;
+    use Shopable, Pluginable, Translatable;
     
     /**
      * @param Shop $shop
@@ -37,11 +38,11 @@ abstract class AbstractController implements ControllerInterface
         }
     
         try {
-            Translation::load(
+            $this->setTranslation(new Translation(
                 sprintf('%s/%s.json', $langPath, $this->shop->_Language()->getIso()),
                 new ParameterEnclosure(),
                 $this->shop->_Language()->getIso()
-            );
+            ));
         } catch (Exception $e) {
             $this->log($e->getMessage(), Logger::ERROR);
         }
