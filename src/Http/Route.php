@@ -113,7 +113,7 @@ class Route
                 ucfirst(Str::camel($this->getController()))
             );
             
-            $controller = new $fqn($this->getShop(), $this->getPlugin());
+            $controller = new $fqn($this->getShop(), $this->getPlugin(), $this->getTranslator());
             
             if (!($controller instanceof AbstractController)) {
                 throw new InvalidControllerException(sprintf(
@@ -123,7 +123,7 @@ class Route
                 ));
             }
             
-            $this->controllers[$this->getController()] = new $fqn($this->getShop(), $this->getPlugin());
+            $this->controllers[$this->getController()] = $controller;
         }
         
         return $this->controllers[$this->getController()]->call($request, $this->getMethod(), $this->getArguments());
