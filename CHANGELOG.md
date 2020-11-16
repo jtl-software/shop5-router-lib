@@ -3,6 +3,10 @@ CHANGELOG
 
 This changelog references the relevant changes (bug and security fixes)
 
+* 0.3.1 (2020-11-16)
+    
+    * change [Lib] Push to new major model lib
+
 * 0.3.0 (2020-11-16)
 
     * change [Lib] Push to new translation major version
