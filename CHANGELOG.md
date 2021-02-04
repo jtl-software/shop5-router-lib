@@ -3,6 +3,13 @@ CHANGELOG
 
 This changelog references the relevant changes (bug and security fixes)
 
+* 0.4.0 (2021-02-04)
+
+    * Added support for PHP 8.0
+    * Added PHPUnit Tests
+    * Fixed PHP 8.0 bug
+    * Changed Namespaces
+
 * 0.3.2 (2020-11-16)
 
     * feature [Controller] Added optional Translator to controller

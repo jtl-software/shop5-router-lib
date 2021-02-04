@@ -1,24 +1,25 @@
 <?php declare(strict_types=1);
 
-namespace JTL\Shop5Router\Http;
+namespace Jtl\Shop5Router\Http;
 
 use Izzle\Translation\Services\Translation;
 use JTL\Plugin\PluginInterface;
-use JTL\Shop5Router\Http\Error\ErrorTranslator;
-use JTL\Shop5Router\Traits\ErrorTranslatable;
-use JTL\Shop5Router\Traits\Translatable;
+use Jtl\Shop5Router\Http\Error\ErrorTranslator;
+use Jtl\Shop5Router\Traits\ErrorTranslatable;
+use Jtl\Shop5Router\Traits\Translatable;
 use Throwable;
 use function json_decode;
 use function json_encode;
-use JTL\Shop5Router\Traits\Shopable;
-use JTL\Shop5Router\Traits\Pluginable;
+use Jtl\Shop5Router\Traits\Shopable;
+use Jtl\Shop5Router\Traits\Pluginable;
 use Shop;
 use JsonException;
+use RuntimeException;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class Router
- * @package JTL\Shop5Router\Http
+ * @package Jtl\Shop5Router\Http
  */
 class Router
 {
@@ -30,9 +31,9 @@ class Router
     protected string $controllerPath;
     
     /**
-     * @var Route
+     * @var Route|null
      */
-    protected Route $route;
+    protected ?Route $route = null;
     
     /**
      * @var array
@@ -46,20 +47,26 @@ class Router
     
     /**
      * @param string $controllerPath
-     * @param Shop $shop
-     * @param PluginInterface $plugin
+     * @param Shop|null $shop
+     * @param PluginInterface|null $plugin
      * @param ErrorTranslator|null $errorTranslator
      * @param Translation|null $translator
      */
     public function __construct(
         string $controllerPath,
-        Shop $shop,
-        PluginInterface $plugin,
+        ?Shop $shop = null,
+        ?PluginInterface $plugin = null,
         ?ErrorTranslator $errorTranslator = null,
         ?Translation $translator = null) {
         $this->setControllerPath($controllerPath);
-        $this->setShop($shop);
-        $this->setPlugin($plugin);
+    
+        if ($shop !== null) {
+            $this->setShop($shop);
+        }
+    
+        if ($plugin !== null) {
+            $this->setPlugin($plugin);
+        }
         
         if ($errorTranslator !== null) {
             $this->setErrorTranslator($errorTranslator);
@@ -72,9 +79,10 @@ class Router
     
     /**
      * @throws JsonException
+     * @param bool $withHeader
      * @return string
      */
-    public function send(): string
+    public function send(bool $withHeader = true): string
     {
         $request = Request::createFromGlobals();
         $arguments = $request->getMethod() === Request::METHOD_POST ?
@@ -108,9 +116,11 @@ class Router
                 ? $this->errorTranslator()->get($e->getCode()) : $e->getMessage();
         }
     
-        $json = json_encode($response, JSON_THROW_ON_ERROR, 512);
+        $json = json_encode($response, JSON_THROW_ON_ERROR);
         
-        header('Content-Type: application/json');
+        if ($withHeader) {
+            header('Content-Type: application/json');
+        }
         
         return $json;
     }
@@ -139,9 +149,14 @@ class Router
     
     /**
      * @return Route
+     * @throws RuntimeException
      */
     public function getRoute(): Route
     {
+        if ($this->route === null) {
+            throw new RuntimeException('Route has not yet been instantiated');
+        }
+        
         return $this->route;
     }
     

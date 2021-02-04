@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace JTL\Shop5Router\Traits;
+namespace Jtl\Shop5Router\Traits;
 
 use Izzle\Translation\Services\Translation;
 
 /**
  * Trait Translatable
- * @package JTL\Shop5Router\Traits
+ * @package Jtl\Shop5Router\Traits
  */
 trait Translatable
 {

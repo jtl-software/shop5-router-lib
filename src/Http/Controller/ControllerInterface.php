@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace JTL\Shop5Router\Http\Controller;
+namespace Jtl\Shop5Router\Http\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Interface ControllerInterface
- * @package JTL\Shop5Router\Http\Controller
+ * @package Jtl\Shop5Router\Http\Controller
  */
 interface ControllerInterface
 {

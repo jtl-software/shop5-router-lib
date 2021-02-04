@@ -1,26 +1,26 @@
 <?php declare(strict_types=1);
 
-namespace JTL\Shop5Router\Http;
+namespace Jtl\Shop5Router\Http;
 
 use Izzle\Translation\Services\Translation;
 use JTL\Plugin\PluginInterface;
-use JTL\Shop5Router\Exceptions\InvalidControllerException;
-use JTL\Shop5Router\Http\Controller\AbstractController;
-use JTL\Shop5Router\Traits\Translatable;
+use Jtl\Shop5Router\Exceptions\InvalidControllerException;
+use Jtl\Shop5Router\Http\Controller\AbstractController;
+use Jtl\Shop5Router\Traits\Translatable;
 use function explode;
 use InvalidArgumentException;
 use Izzle\Support\Str;
-use JTL\Shop5Router\Traits\Shopable;
-use JTL\Shop5Router\Traits\Pluginable;
+use Jtl\Shop5Router\Traits\Shopable;
+use Jtl\Shop5Router\Traits\Pluginable;
 use Symfony\Component\HttpFoundation\Request;
-use Shop;
+use JTL\Shop;
 use function sprintf;
 use function strpos;
 use function ucfirst;
 
 /**
  * Class Route
- * @package JTL\Shop5Router\Http
+ * @package Jtl\Shop5Router\Http
  */
 class Route
 {
@@ -59,16 +59,16 @@ class Route
     /**
      * @param string $controllerPath
      * @param string $action
-     * @param Shop $shop
-     * @param PluginInterface $plugin
+     * @param Shop|null $shop
+     * @param PluginInterface|null $plugin
      * @param Translation|null $translator
      * @param array $arguments
      */
     public function __construct(
         string $controllerPath,
         string $action,
-        Shop $shop,
-        PluginInterface $plugin,
+        ?Shop $shop = null,
+        ?PluginInterface $plugin = null,
         ?Translation $translator = null,
         array $arguments = []
     ) {
@@ -91,8 +91,14 @@ class Route
         $this->setController($params[0]);
         $this->setMethod($params[1]);
         $this->setArguments($arguments);
-        $this->setShop($shop);
-        $this->setPlugin($plugin);
+        
+        if ($shop !== null) {
+            $this->setShop($shop);
+        }
+    
+        if ($plugin !== null) {
+            $this->setPlugin($plugin);
+        }
         
         if ($translator !== null) {
             $this->setTranslator($translator);
