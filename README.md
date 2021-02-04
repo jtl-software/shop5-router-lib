@@ -48,7 +48,7 @@ namespace Plugin\your_plugin\Controller;
 
 use Plugin\your_plugin\Models\Foobar;
 use Plugin\your_plugin\Services\FooService;
-use JTL\Shop5Router\Http\Controller\AbstractController;
+use Jtl\Shop5Router\Http\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 class FooController extends AbstractController

@@ -1,34 +1,39 @@
 <?php declare(strict_types=1);
 
-namespace JTL\Shop5Router\Http\Controller;
+namespace Jtl\Shop5Router\Http\Controller;
 
 use Izzle\Translation\Services\Translation;
 use JTL\Plugin\Plugin;
 use JTL\Plugin\PluginInterface;
 use JTL\Shop;
 use InvalidArgumentException;
-use JTL\Shop5Router\Traits\Pluginable;
-use JTL\Shop5Router\Traits\Shopable;
-use JTL\Shop5Router\Traits\Translatable;
+use Jtl\Shop5Router\Traits\Pluginable;
+use Jtl\Shop5Router\Traits\Shopable;
+use Jtl\Shop5Router\Traits\Translatable;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class AbstractController
- * @package JTL\Shop5Router\Http\Controller
+ * @package Jtl\Shop5Router\Http\Controller
  */
 abstract class AbstractController implements ControllerInterface
 {
     use Shopable, Pluginable, Translatable;
     
     /**
-     * @param Shop $shop
-     * @param PluginInterface $plugin
+     * @param Shop|null $shop
+     * @param PluginInterface|null $plugin
      * @param Translation|null $translator
      */
-    public function __construct(Shop $shop, PluginInterface $plugin, ?Translation $translator = null)
+    public function __construct(Shop $shop = null, PluginInterface $plugin = null, ?Translation $translator = null)
     {
-        $this->setShop($shop);
-        $this->setPlugin($plugin);
+        if ($shop !== null) {
+            $this->setShop($shop);
+        }
+        
+        if ($plugin !== null) {
+            $this->setPlugin($plugin);
+        }
         
         if ($translator !== null) {
             $this->setTranslator($translator);
@@ -49,7 +54,7 @@ abstract class AbstractController implements ControllerInterface
     
         array_unshift($parameter, $request);
         
-        return call_user_func_array([$this, $method], $parameter);
+        return call_user_func_array([$this, $method], array_values($parameter));
     }
     
     /**

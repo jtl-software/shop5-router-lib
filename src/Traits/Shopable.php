@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace JTL\Shop5Router\Traits;
+namespace Jtl\Shop5Router\Traits;
 
 use Exception;
 use JTL\Shop;
@@ -8,7 +8,7 @@ use Monolog\Logger;
 
 /**
  * Trait Shopable
- * @package JTL\Shop5Router\Traits
+ * @package Jtl\Shop5Router\Traits
  */
 trait Shopable
 {

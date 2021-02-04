@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace JTL\Shop5Router\Http\Error;
+namespace Jtl\Shop5Router\Http\Error;
 
 use Izzle\Model\Model;
 use Izzle\Model\PropertyCollection;
@@ -8,7 +8,7 @@ use Izzle\Model\PropertyInfo;
 
 /**
  * Class ErrorTranslatorItem
- * @package JTL\Shop5Router\Http\Error
+ * @package Jtl\Shop5Router\Http\Error
  */
 class ErrorTranslatorItem extends Model
 {

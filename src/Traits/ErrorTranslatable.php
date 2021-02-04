@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace JTL\Shop5Router\Traits;
+namespace Jtl\Shop5Router\Traits;
 
-use JTL\Shop5Router\Http\Error\ErrorTranslator;
+use Jtl\Shop5Router\Http\Error\ErrorTranslator;
 
 /**
  * Trait ErrorTranslatable
- * @package JTL\Shop5Router\Traits
+ * @package Jtl\Shop5Router\Traits
  */
 trait ErrorTranslatable
 {

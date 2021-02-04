@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace JTL\Shop5Router\Http\Error;
+namespace Jtl\Shop5Router\Http\Error;
 
 use InvalidArgumentException;
 
 /**
  * Class ErrorTranslator
- * @package JTL\Shop5Router\Http\Error
+ * @package Jtl\Shop5Router\Http\Error
  */
 class ErrorTranslator
 {
