@@ -2,6 +2,7 @@
 
 namespace Jtl\Shop5Router\Http;
 
+use Illuminate\Http\Request;
 use Izzle\Translation\Services\Translation;
 use JTL\Plugin\PluginInterface;
 use Jtl\Shop5Router\Exceptions\InvalidControllerException;
@@ -12,7 +13,6 @@ use InvalidArgumentException;
 use Izzle\Support\Str;
 use Jtl\Shop5Router\Traits\Shopable;
 use Jtl\Shop5Router\Traits\Pluginable;
-use Symfony\Component\HttpFoundation\Request;
 use JTL\Shop;
 use function sprintf;
 use function strpos;
