@@ -5,7 +5,7 @@ namespace Jtl\Shop5Router\Test\Http;
 use Jtl\Shop5Router\Http\Route;
 use Jtl\Shop5Router\Test\Http\Controller\FooBarController;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
 
 class RouteTest extends TestCase
 {

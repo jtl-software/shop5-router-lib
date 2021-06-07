@@ -3,6 +3,10 @@ CHANGELOG
 
 This changelog references the relevant changes (bug and security fixes)
 
+* 0.5.0 (2021-06-07)
+
+    * Changed Request Library to illuminate/http
+
 * 0.4.0 (2021-02-04)
 
     * Added support for PHP 8.0

@@ -15,7 +15,7 @@ use Jtl\Shop5Router\Traits\Pluginable;
 use Shop;
 use JsonException;
 use RuntimeException;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
 
 /**
  * Class Router

@@ -6,7 +6,7 @@ use Jtl\Shop5Router\Http\Router;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use InvalidArgumentException;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
 
 class RouterTest extends TestCase
 {

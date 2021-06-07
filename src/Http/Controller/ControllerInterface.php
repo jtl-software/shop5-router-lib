@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
 namespace Jtl\Shop5Router\Http\Controller;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
 
 /**
  * Interface ControllerInterface

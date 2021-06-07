@@ -3,7 +3,7 @@
 namespace Jtl\Shop5Router\Test\Http\Controller;
 
 use Jtl\Shop5Router\Http\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
 
 class FooBarController extends AbstractController
 {

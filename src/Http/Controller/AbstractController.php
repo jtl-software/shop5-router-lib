@@ -10,7 +10,7 @@ use InvalidArgumentException;
 use Jtl\Shop5Router\Traits\Pluginable;
 use Jtl\Shop5Router\Traits\Shopable;
 use Jtl\Shop5Router\Traits\Translatable;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
 
 /**
  * Class AbstractController
