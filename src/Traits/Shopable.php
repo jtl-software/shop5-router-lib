@@ -51,9 +51,14 @@ trait Shopable
      */
     public function log(string $message, int $level = Logger::DEBUG, array $context = []): self
     {
+        if ($this->shop === null) {
+            return $this;
+        }
+
         try {
             $this->shop->_Container()->getLogService()->log($level, $message, $context);
-        } catch (Exception $e) {}
+        } catch (Exception $e) {
+        }
         
         return $this;
     }
