@@ -3,6 +3,10 @@ CHANGELOG
 
 This changelog references the relevant changes (bug and security fixes)
 
+* 0.5.1 (2021-06-16)
+
+    * Changed minor null check for shopable trait
+
 * 0.5.0 (2021-06-07)
 
     * Changed Request Library to illuminate/http
